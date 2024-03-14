@@ -1,0 +1,30 @@
+.cartDiv,.wishlist{
+    overflow: visible;
+    width: 100px;
+    height: 42px;
+    /* border: 1px solid white !important; */
+    margin-inline: 3px;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .wishlist{
+    margin-right: 15px;
+  }
+  
+  .cartCounter,.wishCounter{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0%;
+    left: 70%;
+    display: flex !important;
+    justify-content: center ;
+    align-items: center ;
+    border-radius: 50%;
+    z-index: 1000;
+  }
+  
+  .wishCounter{
+    left: 78%;
+  }
