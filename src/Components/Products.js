@@ -16,7 +16,7 @@ const Products = ({ title, search }) => {
 
   let docTitle = title;
 
-  document.title = docTitle ? `Products - ${docTitle}` : "";
+  document.title = docTitle ? `${docTitle}` : "";
 
   useEffect(() => {
     if (title) {
