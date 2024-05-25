@@ -7,7 +7,7 @@ const Sidebar = () => {
   const [data,setData] = useState([]);
 
   useEffect(() => {
-    axios.get('https://dummyjson.com/products/categories').then((res) => setData(res.data));
+    axios.get('https://dummyjson.com/products/category-list').then((res) => setData(res.data));
   },[]);
 
   return (
