@@ -44,7 +44,7 @@ const Search = () => {
                     <div className="flex justify-between items-center my-3">
                         <h1 className='text-2xl font-semibold'>Search Result for "{searchText}"</h1>
                         <div className="flex">
-                            <NavLink className="nav-link text-blue-500" to="/">Home&nbsp;</NavLink>/&nbsp;<span>Search</span>
+                            <NavLink className="nav-link text-purple-600" to="/">Home&nbsp;</NavLink>/&nbsp;<span>Search</span>
                         </div>
                     </div>
                 </div>
