@@ -13,9 +13,8 @@ const Checkout = () => {
 
   const [promoText, setPromoText] = useState('');
   const [modalShow, setModalShow] = useState(false);
+  const [discount, setDiscount] = useState(0);
   const [btnText, setBtnText] = useState('Choose Method to Continue');
-
-  let discount = promoText;
 
   let netTotal = total - discount;
 
@@ -71,11 +70,21 @@ const Checkout = () => {
     },
   ];
 
+  const applyPromocode = (e) => {
+    e.preventDefault();
+    if (promoText) {
+      setDiscount(promoText);
+    } else {
+      setDiscount(0);
+    }
+    setPromoText('');
+  }
+
   const modalHandler = () => {
-    if(netTotal > 0){
+    if (netTotal > 0) {
       setModalShow(true);
-    }else{
-      if(window.confirm("Cart Total Is Zero. Please Add Product To Cart And Continue. Press Ok To Go To Cart")){
+    } else {
+      if (window.confirm("Cart Total Is Zero. Please Add Product To Cart And Continue. Press Ok To Go To Cart")) {
         window.location.href = '/cart';
       }
     }
@@ -83,63 +92,100 @@ const Checkout = () => {
 
   return (
     <>
-      <div className='d-flex'>
+      <div>
         <div className="container">
-          <div className="d-flex pt-2">
-            <NavLink className="nav-link" to="/">Home / </NavLink>&nbsp;Checkout
+          <div className="flex my-3">
+            <NavLink className="nav-link text-blue-500" to="/">Home</NavLink>&nbsp; / &nbsp;Checkout
           </div>
         </div>
       </div>
-      <div className='cartDiv py-3'>
+      <div>
         <div className='container'>
-          <div className='d-flex justify-content-between'>
-            <div className="col col-1 col-sm-6 px-5 py-3 d-flex justify-content-between flex-wrap" style={{ backgroundColor: "#d9d3d2" }}>
-              <h6 className='w-100'>Contact Details</h6>
-              <TextField id="outlined-basic" label="First Name" variant="outlined" size='small' />
-              <TextField id="outlined-basic" label="Last Name" variant="outlined" size='small' />
-              <TextField id="outlined-basic" className='mt-3 w-100' label="Mobile No" variant="outlined" size='small' /><br />
-              <TextField id="outlined-basic" className='mt-3 w-100' label="Email Address" variant="outlined" size='small' />
-              <h6 className='pt-2 w-100'>Address</h6>
-              <TextField id="outlined-basic" className='w-100' label="House / Flat / Block No" variant="outlined" size='small' />
-              <TextField id="outlined-basic" className='my-3 w-100' label="Apartment / Road / Area" variant="outlined" size='small' />
+          <div className='flex flex-wrap'>
+            <div className='flex flex-col w-full md:w-1/2 bg-[#d9d3d2] p-3 mb-5 rounded-lg'>
+              <p className='w-full font-semibold text-lg'>Contact Details</p><br />
+              <div className='flex flex-wrap'>
+                <TextField id="outlined-basic" className="w-full md:w-1/2 mb-3 md:mb-0" label="First Name" variant="outlined" size='small' />
+                <TextField id="outlined-basic" className='w-full md:w-1/2 mb-3 md:mb-0' label="Last Name" variant="outlined" size='small' />
+              </div>
+              <TextField id="outlined-basic" className='w-full mt-0' label="Mobile No" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='w-full mt-3' label="Email Address" variant="outlined" size='small' />
+              <h6 className='w-full my-3 font-semibold text-lg'>Address</h6>
+              <TextField id="outlined-basic" className='w-full' label="House / Flat / Block No" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='my-3 w-full' label="Apartment / Road / Area" variant="outlined" size='small' />
               <TextField id="outlined-basic" className='mb-3' label="Landmark" variant="outlined" size='small' />
               <TextField id="outlined-basic" label="City" variant="outlined" size='small' />
-              <TextField id="outlined-basic" className='my-3w-100' label="Taluka" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='my-3 w-full' label="Taluka" variant="outlined" size='small' />
               <TextField id="outlined-basic" label="State" variant="outlined" size='small' />
-              <TextField id="outlined-basic" className='mt-3 w-100' label="Pincode" variant="outlined" size='small' />
-              <h6 className='pt-2 w-100'>Any Messages</h6>
-              <TextField id="standard-multiline-static" multiline rows={3} className='w-100' label="Messages Here" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='mt-3 w-full' label="Pincode" variant="outlined" size='small' />
+              <h6 className='w-full my-3 font-semibold text-lg'>Any Messages</h6>
+              <TextField id="standard-multiline-static" multiline rows={3} className='w-full' label="Messages Here" variant="outlined" size='small' />
+              <button className="mt-3 px-2 py-1 bg-purple-500 text-white rounded-md w-full md:w-1/2 m-auto hover:bg-purple-600 transition-[background]">Save Details</button>
+            </div>
+            <div className='flex flex-col w-full md:w-1/2 px-3'>
+              <h6 className='text-left font-semibold text-xl'>Order Summary</h6>
+              <form onSubmit={applyPromocode} className='my-3 relative'>
+                <TextField value={promoText} onChange={(e) => setPromoText(e.target.value)} id="outlined-basic" className='promoInput w-full' label="Have You , Promocode ?" variant="outlined" size='small' />
+                <button className='promoBtn btn btn-primary absolute bottom-0 right-0' disabled={!netTotal > 0}>{netTotal > 0 ? "Apply Promocode" : "Cart is Empty"}</button>
+              </form>
+              <h6 className='flex justify-between mb-3 text-base font-semibold'>Sub Total : <span>$  {total ? total : "0"}</span></h6>
+              <h6 className='flex justify-between mb-3 text-base font-semibold'>Discount : <span>$ {discount}</span></h6>
+              <h6 className='flex justify-between mb-3 text-base font-semibold'>Net Payable : <span>$ {netTotal}</span></h6>
+              <button className='btn btn-success w-full' disabled={!netTotal > 0} onClick={() => modalHandler()}>{netTotal > 0 ? `Pay $ ${netTotal}` : "Cart is Empty ! Add Products To Continue"}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/*<div>
+        <div className='container'>
+          <div className='flex justify-between'>
+            <div className="col col-1 col-sm-6 px-5 py-3 flex justify-between flex-wrap" style={{ backgroundColor: "#d9d3d2" }}>
+              <h6 className='w-full mb-3'>Contact Details</h6>
+              <TextField id="outlined-basic" className="w-1/2" label="First Name" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='w-1/2' label="Last Name" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='mt-3 w-full' label="Mobile No" variant="outlined" size='small' /><br />
+              <TextField id="outlined-basic" className='mt-3 w-full' label="Email Address" variant="outlined" size='small' />
+              <h6 className='w-full my-3'>Address</h6>
+              <TextField id="outlined-basic" className='w-full' label="House / Flat / Block No" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='my-3 w-full' label="Apartment / Road / Area" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='mb-3' label="Landmark" variant="outlined" size='small' />
+              <TextField id="outlined-basic" label="City" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='my-3w-full' label="Taluka" variant="outlined" size='small' />
+              <TextField id="outlined-basic" label="State" variant="outlined" size='small' />
+              <TextField id="outlined-basic" className='mt-3 w-full' label="Pincode" variant="outlined" size='small' />
+              <h6 className='pt-2 w-full'>Any Messages</h6>
+              <TextField id="standard-multiline-static" multiline rows={3} className='w-full' label="Messages Here" variant="outlined" size='small' />
             </div>
             <div className="col col-2 col-sm-5 mt-5 px-5 py-3">
               <h5 className='text-center pb-5'>Order Summary</h5>
               <div className='promoDiv pb-3'>
-                <TextField value={promoText} onChange={(e) => setPromoText(e.target.value)} id="outlined-basic" className='promoInput w-100' label="Promocode" variant="outlined" size='small' />
+                <TextField value={promoText} onChange={(e) => setPromoText(e.target.value)} id="outlined-basic" className='promoInput w-full' label="Promocode" variant="outlined" size='small' />
                 <button className='promoBtn btn btn-primary'>Apply Promocode</button>
               </div>
-              <h6 className='d-flex justify-content-between'>Sub Total : <span>$  {total ? total : "0"}</span></h6>
-              <h6 className='d-flex justify-content-between'>Discount : <span>$ {discount ? discount : '0'}</span></h6>
-              <h6 className='d-flex justify-content-between'>Net Payable : <span>$ {netTotal ? netTotal : '0'}</span></h6>
+              <h6 className='flex justify-between'>Sub Total : <span>$  {total ? total : "0"}</span></h6>
+              <h6 className='flex justify-between'>Discount : <span>$ {discount ? discount : '0'}</span></h6>
+              <h6 className='flex justify-between'>Net Payable : <span>$ {netTotal ? netTotal : '0'}</span></h6>
               <h6>Choose Payment Method <i className="fa-solid fa-caret-down"></i></h6>
-              <button className='btn btn-success my-5 w-100' onClick={() => modalHandler()}>Pay $ {netTotal}</button>
+              <button className='btn btn-success my-5 w-full' onClick={() => modalHandler()}>Pay $ {netTotal}</button>
             </div>
           </div>
         </div>
-      </div>
+      </div>*/}
       <Modal show={modalShow} size="sm" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Body className='bg-dark text-white'>
-          <h4 className='text-center d-flex justify-content-between text-white'>Payment <i onClick={() => setModalShow(false)} title='Close' className="d-flex text-danger justify-content-between fa-solid fa-xmark"></i></h4>
+          <h4 className='text-center flex justify-between text-white'>Payment <i onClick={() => setModalShow(false)} title='Close' className="d-flex text-danger justify-content-between fa-solid fa-xmark"></i></h4>
           <p className='text-secondary pt-3'>How Would You Like To Pay</p>
           {
             paymentMethod.map((val, ind) => {
               return (
-                <div className='paymentMethod d-flex justify-content-between' onClick={() => setBtnText(`Pay $${netTotal} with ${val.paymentName}`)} id={val.id} key={ind}>
+                <div className='paymentMethod flex justify-between' onClick={() => setBtnText(`Pay $${netTotal} with ${val.paymentName}`)} id={val.id} key={ind}>
                   <h6>{val.name}</h6>
                   <i className={val.cName}>{val.itaTag}</i>
                 </div>
               )
             })
           }
-          <Button className='w-100' onClick={() => setModalShow(false)}>{btnText}</Button>
+          <Button className='w-full' onClick={() => setModalShow(false)}>{btnText}</Button>
         </Modal.Body>
       </Modal>
     </>

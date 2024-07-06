@@ -1,85 +1,82 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { TextField } from '@mui/material';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import axios from 'axios';
 
-const Topnav = ({ setSearch, search }) => {
+const Topnav = () => {
 
     const [modalShow, setModalShow] = useState(false);
     const [signIn, setSignIn] = useState(false);
+    const [search, setSearch] = useState("");
+    const [show, setShow] = useState(false);
+    const [showSearchModel, setShowSearchModel] = useState(false);
+    const [sideLink, setSideLink] = useState([]);
 
+    const navigate = useNavigate();
 
-    const searchHandler = (e) => {
-        setSearch(e.target.value)
-    };
+    useEffect(() => {
+        axios.get('https://dummyjson.com/products/category-list').then((res) => setSideLink(res.data));
+    }, []);
 
     const totalItems = useSelector((state) => state.cart.totalItems);
     const wishTotalItems = useSelector((state) => state.cart.wishTotalItems);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (search) {
+            navigate(`/search/${search}`);
+            setSearch("");
+            setShowSearchModel(false)
+        } else {
+            window.alert("Please Enter Keyword To Search")
+        }
+    }
+
     return (
         <>
-            {/* <div className="bg-dark navDiv">
-                <div className='container'> */}
-            <nav className="navbar w-100 bg-dark bg-body-tertiary navbar-expand-lg text-white px-5" data-bs-theme="dark">
-                <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">E-Commerce</NavLink>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-                        <form className="d-flex m-auto" role="search">
-                            <input className="form-control w-100 border border-dark" value={search} onChange={searchHandler} type="search" placeholder="Search" aria-label="Search" />
-                        </form>
-                        <ul className="navbar-nav mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <NavLink className="nav-link cartDivNav" to="/cart">
-                                    {/* <div className="d-flex cartDiv mx-2"> */}
-                                    <div className='d-flex justify-content-center align-items-center'>
-                                        <i className="fa-solid fa-cart-shopping mx-1"></i> <span className='mx-1'>Cart</span>
-                                    </div>
-                                    <span style={{ display: totalItems > 0 ? "grid" : "none" }} className='cartCounter bg-danger text-white'>{totalItems}</span>
-                                    {/* </div> */}
+            <header className='h-[68px] shadow-md'>
+                <div className='container'>
+                    <div className='flex justify-between items-center py-3'>
+                        <div className='w-full md:w-auto flex gap-x-5 md:gap-x-2 justify-between items-center'>
+                            <i className="fa-solid fa-bars cursor-pointer pt-2" onClick={() => setShow(true)}></i>
+                            <NavLink to={"/"} className="text-2xl">ecommerce</NavLink>
+                            <div className='flex items-center gap-x-3'>
+                                <button onClick={() => setShowSearchModel(true)} className='outline-none border-none block md:hidden'>
+                                    <i className="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                                <NavLink to={"/cart"} className="block md:hidden relative">
+                                    <i className="fa-solid fa-cart-shopping"></i>
+                                    <span style={{ display: totalItems > 0 ? "flex" : "none" }} className='absolute w-[15px] h-[15px] flex justify-center items-center bg-red-500 -top-1 -right-1 rounded-full text-white text-[8px]'>{totalItems}</span>
                                 </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link wishlist" to="/wishlist">
-                                    <div className='d-flex justify-content-center align-items-center'>
-                                        <i className="fa-solid fa-heart"></i> <span className='mx-1'>WishList</span>
-                                    </div>
-                                    <span style={{ display: wishTotalItems > 0 ? "grid" : "none" }} className="wishCounter bg-danger text-white">{wishTotalItems}</span>
+                                <NavLink to={"/wishlist"} className="block md:hidden relative">
+                                    <i className="fa-solid fa-heart"></i>
+                                    <span style={{ display: wishTotalItems > 0 ? "flex" : "none" }} className='absolute w-[15px] h-[15px] flex justify-center items-center bg-red-500 -top-1 -right-1 rounded-full text-white'>{wishTotalItems}</span>
                                 </NavLink>
-                            </li>
-                            <button className="btn btn-primary pl-5" onClick={() => setModalShow(true)}>Log In / Sign Up</button>
-                        </ul>
+                            </div>
+                        </div>
+                        <div className='hidden md:block'>
+                            <div className='flex justify-between items-center text-white gap-x-2'>
+                                <button onClick={() => setShowSearchModel(true)} className="hover:bg-gray-200 text-black hover:text-white py-1 px-2 rounded-md">
+                                    <i className="fa-solid fa-magnifying-glass mx-1"></i><span className='mx-1 text-black'>Search</span>
+                                </button>
+                                <NavLink to={"/cart"} className="hover:bg-gray-200 text-black hover:text-white py-1 px-2 rounded-md relative">
+                                    <i className="fa-solid fa-cart-shopping mx-1"></i> <span className='mx-1'>Cart</span>
+                                    <span style={{ display: totalItems > 0 ? "flex" : "none" }} className='absolute w-[20px] h-[20px] flex justify-center items-center bg-red-500 top-0 right-0 rounded-full text-white'>{totalItems}</span>
+                                </NavLink>
+                                <NavLink to={"/wishlist"} className="hover:bg-gray-200 text-black hover:text-white py-1 px-2 rounded-md relative">
+                                    <i className="fa-solid fa-heart"></i> <span className='mx-1'>WishList</span>
+                                    <span style={{ display: wishTotalItems > 0 ? "flex" : "none" }} className='absolute w-[20px] h-[20px] flex justify-center items-center bg-red-500 top-0 right-0 rounded-full text-white'>{wishTotalItems}</span>
+                                </NavLink>
+                                <button className="bg-purple-500 text-white capitalize py-1 px-3 rounded-md" onClick={() => { setModalShow(true); setShow(false) }}>Log In</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </nav>
-            {/* </div>
-            </div> */}
-            {/* <Navbar className='navBar' bg="dark" data-bs-theme="dark">
-                <Container>
-                    <Navbar.Brand href="/">E-Commerce</Navbar.Brand>
-                    <div className="searchBarDiv">
-                        <input type="text" value={search} onChange={searchHandler} placeholder='Search' className="searchBar" />
-                        <button className='searchBtn'>🔍</button>
-                    </div>
-                    <Nav className="ml-auto">
-                        <NavLink className='nav-link text-white' to="/cart" title='cart'>
-                            <div className="d-flex cartDiv mx-2">
-                                <i className="fa-solid fa-cart-shopping fa-xl"></i>
-                                <h6 style={{ display: totalItems > 0 ? "block" : "none" }} className='cartCounter bg-danger text-white'>{totalItems}</h6>
-                            </div>
-                        </NavLink>
-                        <NavLink className='nav-link text-white mx-1 wishlist' to="/wishlist" title='Wishlist'>
-                            <i className="fa-solid fa-heart fa-xl"></i>
-                            <h6 style={{ display: wishTotalItems > 0 ? "block" : "none" }} className="cartCounter bg-danger text-white">{wishTotalItems}</h6>
-                        </NavLink>
-                        <button className="btn btn-primary pl-5" onClick={() => setModalShow(true)}>Log In / Sign Up</button>
-                    </Nav>
-                </Container>
-            </Navbar> */}
+            </header>
             <Modal show={modalShow} size="sm" aria-labelledby="contained-modal-title-vcenter" centered>
                 {
 
@@ -95,7 +92,7 @@ const Topnav = ({ setSearch, search }) => {
                                 <TextField id="outlined-basic" className='w-100 my-1' label="Email" variant="outlined" size='small' />
                                 <label>Password</label>
                                 <TextField id="outlined-basic" className='w-100 my-1 mb-2' label="Password" variant="outlined" size='small' />
-                                <Button className='w-100' onClick={() => setModalShow(false)}>Sign Up</Button>
+                                <Button className='w-100 bg-purple-500' onClick={() => setModalShow(false)}>Sign Up</Button>
                                 <div className='w-100 mt-4'>
                                     <h6 className='text-center mb-4'>Also Sign Up With</h6>
                                     <div className='d-flex justify-content-evenly'>
@@ -112,7 +109,7 @@ const Topnav = ({ setSearch, search }) => {
                                             <span>TrueCaller</span>
                                         </div>
                                     </div>
-                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(false)}>Back To <NavLink>Log In </NavLink>?</h6>
+                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(false)}>Back To <NavLink className="text-blue-500">Log In </NavLink>?</h6>
                                 </div>
                             </Modal.Body>
                         </>) : (
@@ -123,9 +120,9 @@ const Topnav = ({ setSearch, search }) => {
                                 <TextField id="outlined-basic" className='w-100 my-1' label="Email or Phone" variant="outlined" size='small' />
                                 <label>Password</label>
                                 <TextField id="outlined-basic" className='w-100 my-1 mb-2' label="Password" variant="outlined" size='small' />
-                                <Button className='w-100' onClick={() => setModalShow(false)}>Log In</Button>
+                                <Button className='w-100 bg-purple-500' onClick={() => setModalShow(false)}>Log In</Button>
                                 <div className='d-flex justify-content-end pt-3 '>
-                                    <NavLink>Forgot Password ?</NavLink>
+                                    <NavLink className="text-blue-500">Forgot Password ?</NavLink>
                                 </div>
                                 <div className='w-100 mt-4'>
                                     <h6 className='text-center mb-4'>Also Login With</h6>
@@ -143,12 +140,59 @@ const Topnav = ({ setSearch, search }) => {
                                             <span>TrueCaller</span>
                                         </div>
                                     </div>
-                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(true)}>Are You New User ? <NavLink> Sign Up </NavLink>Here</h6>
+                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(true)}>Are You New User ? <NavLink className="text-blue-500"> Sign Up </NavLink>Here</h6>
                                 </div>
                             </Modal.Body>
                         </>)
                 }
             </Modal>
+            <Modal show={showSearchModel} onHide={() => setShowSearchModel(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Search Products</Modal.Title>
+                </Modal.Header>
+                <form onSubmit={handleSubmit}>
+                    <Modal.Body>
+                        <p>Type Keyword and Press <kbd>Enter</kbd> To Search</p>
+                        <div className='my-3 relative'>
+                            <input type="text" value={search} className="w-full border-[1px] border-black outline-none px-2 py-2 text-lg rounded-md" onChange={(e) => setSearch(e.target.value)} placeholder='Search Products' />
+                            <i className={`fa-solid fa-xmark absolute top-5 right-1 fa-xl cursor-pointer ${search ? "block" : "hidden"}`} onClick={() => setSearch("")}></i>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className='px-4 py-2 bg-purple-500 text-white rounded-md'>Search</button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
+            <Offcanvas show={show} onHide={() => setShow(false)}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>E-Commerce</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <div className='flex flex-col w-[100%] m-auto my-2 md:hidden'>
+                        <div className='flex justify-between items-center my-2 gap-x-2'>
+                            <NavLink to={"/cart"} onClick={() => setShow(false)} className={`w-1/2 flex ${totalItems > 0 ? "justify-between" : "justify-center"} items-center bg-gray-200 text-black hover:text-white py-1 px-2 rounded-md`}>
+                                <div><i className="fa-solid fa-cart-shopping mx-1"></i> <span className='mx-1'>Cart</span></div>
+                                <span style={{ display: totalItems > 0 ? "flex" : "none" }} className=' w-[20px] h-[20px] flex justify-center items-center bg-red-500 top-[6px] right-1 rounded-full text-white'>{totalItems}</span>
+                            </NavLink>
+                            <NavLink to={"/wishlist"} onClick={() => setShow(false)} className={`w-1/2 flex ${wishTotalItems > 0 ? "justify-between" : "justify-center"} items-center bg-gray-200 text-black hover:text-white py-1 px-2 rounded-md`}>
+                                <div><i className="fa-solid fa-heart"></i> <span className='mx-1'>WishList</span></div>
+                                <span style={{ display: wishTotalItems > 0 ? "flex" : "none" }} className=' w-[20px] h-[20px] flex justify-center items-center bg-red-500 top-[6px] right-1 rounded-full text-white'>{wishTotalItems}</span>
+                            </NavLink>
+                        </div>
+                        <button className="bg-purple-500 text-white capitalize py-1 px-3 rounded-md mb-1" onClick={() => { setModalShow(true); setShow(false) }}>Log In</button>
+                        <button className="bg-purple-500 text-white capitalize py-1 px-3 rounded-md" onClick={() => { setModalShow(true); setShow(false); setSignIn(true) }}>Register</button>
+                    </div>
+                    <NavLink to="/" className="nav-link sideLink py-2 px-1 rounded-md" onClick={() => setShow(false)}>All Product</NavLink>
+                    <p className='text-muted text-xs my-2'>Categories</p>
+                    {
+                        sideLink.map((val, ind) => {
+                            return (
+                                <NavLink to={`/${val}`} className='nav-link sideLink py-2 px-1 rounded-md mb-2' key={ind} onClick={() => setShow(false)}>{val}</NavLink>
+                            )
+                        })
+                    }
+                </Offcanvas.Body>
+            </Offcanvas>
         </>
     )
 }

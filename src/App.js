@@ -7,13 +7,14 @@ import Cart from "./Components/Cart";
 import Checkout from "./Components/Checkout";
 import Wishlist from "./Components/Wishlist";
 import { Puff } from "react-loader-spinner";
+import Search from "./Components/Search";
 
 function App() {
 
   const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState("");
+
   useEffect(() => {
-    window.addEventListener("beforeunload",() => {
+    window.addEventListener("beforeunload", () => {
       setLoading(true);
     })
   }, []);
@@ -24,19 +25,20 @@ function App() {
       {
         loading ?
           <>
-            <div className="loader">
+            <div className="loader w-screen h-screen grid place-items-center">
               <Puff />
             </div>
           </> :
           <>
-            <Topnav setSearch={setSearch} search={search} />
+            <Topnav />
             <Routes>
-              <Route path="/" element={<Home  setSearch={setSearch} search={search}  />} />
+              <Route path="/" element={<Home />} />
               <Route path="/:title" element={<Home />} />
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/search/:searchText" element={<Search />} />
             </Routes>
           </>
       }

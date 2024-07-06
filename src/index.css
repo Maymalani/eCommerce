@@ -1,4 +1,10 @@
-*{
+.sideLink.active,
+.sideLink:hover{
+  background-color: bisque;
+  color: black;
+}
+
+/* *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -24,7 +30,6 @@ body{
   overflow: visible;
   width: 100px;
   height: 42px;
-  /* border: 1px solid white !important; */
   margin-inline: 3px;
   position: relative;
   z-index: 100;
@@ -232,7 +237,7 @@ thead tr th{
 .social{
   width: 40px;
   height: 40px;
-  /* background-color: black; */
+  background-color: black;
   border: 1px solid black;
   display: grid;
   place-items: center;
@@ -250,4 +255,4 @@ thead tr th{
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */

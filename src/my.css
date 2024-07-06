@@ -1,8 +1,8 @@
-.cartDiv,.wishlist{
+/* .cartDiv,.wishlist{
     overflow: visible;
     width: 100px;
     height: 42px;
-    /* border: 1px solid white !important; */
+    border: 1px solid white !important; 
     margin-inline: 3px;
     position: relative;
     z-index: 100;
@@ -27,4 +27,4 @@
   
   .wishCounter{
     left: 78%;
-  }
+  } */
