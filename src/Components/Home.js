@@ -13,6 +13,7 @@ const Home = () => {
 
   const paginationHandle = (event, value) => {
     setPage(value);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     let pageNo = value - 1;
     let skipApi = pageNo * 12;
     setPagination(skipApi);
@@ -43,7 +44,7 @@ const Home = () => {
             !title ?
               <div className='w-full m-auto grid place-items-center mb-5'>
                 <Stack spacing={0}>
-                  <Pagination count={10} color='secondary' size='small' page={page} onChange={paginationHandle} />
+                  <Pagination count={10} color='secondary' shape='rounded' size='small' page={page} onChange={paginationHandle} />
                 </Stack>
               </div>
               : ""

@@ -8,6 +8,7 @@ import Checkout from "./Components/Checkout";
 import Wishlist from "./Components/Wishlist";
 import { Puff } from "react-loader-spinner";
 import Search from "./Components/Search";
+import Clicktop from "./Components/Clicktop";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/search/:searchText" element={<Search />} />
             </Routes>
+            <Clicktop />
           </>
       }
     </>
