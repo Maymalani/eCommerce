@@ -8,7 +8,6 @@ import { Toaster } from 'react-hot-toast';
 const Products = ({ title, pagination }) => {
 
   const [data, setData] = useState([]);
-  const [cartProductTitle, setCartProductTitle] = useState([]);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const wish = useSelector((state) => state.cart.wish);
@@ -31,7 +30,6 @@ const Products = ({ title, pagination }) => {
   const addCartHandler = (event, value) => {
     event.preventDefault();
     dispatch(addToCart(value));
-    setCartProductTitle(value.title)
   }
 
   const addWishHandler = (event, value) => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
 import { removeToWish, emptyWish } from './Slice';
 
 const Wishlist = () => {
@@ -26,7 +25,7 @@ const Wishlist = () => {
                     <div className="flex justify-between items-center my-3">
                         <h1 className='text-2xl font-semibold'>Wishlist</h1>
                         <div className="flex">
-                            <NavLink className="nav-link text-blue-500" to="/">Home&nbsp;</NavLink>/&nbsp;<span>Wishlist</span>
+                            <NavLink className="nav-link text-purple-600" to="/">Home&nbsp;</NavLink>/&nbsp;<span>Wishlist</span>
                         </div>
                     </div>
                 </div>
@@ -34,7 +33,7 @@ const Wishlist = () => {
             {
                 wishTotalItems > 0 ? (
                     <>
-                        <div>
+                        <div className='mb-[80px]'>
                             <div className='container'>
                                 <div className='flex'>
                                     <div className='grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
@@ -82,8 +81,8 @@ const Wishlist = () => {
                                 <i className="emptyIcon fa-solid fa-circle-xmark text-danger text-7xl my-3"></i>
                                 <h2>Your Wishlist Is Empty !</h2>
                                 <br />
-                                <button onClick={goback} className='btn btn-primary mx-1'>Continue To Shopping</button>
-                                <NavLink to="/" className='mx-1 my-3 text-blue-500 underline'>Go To Home</NavLink>
+                                <button onClick={goback} className='bg-purple-600 text-white px-4 py-2 rounded-md'>Continue To Shopping</button>
+                                <NavLink to="/" className='mx-1 my-3 text-purple-600 underline'>Go To Home</NavLink>
                             </div>
                         </div>
                     </div>

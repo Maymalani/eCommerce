@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { addToCart, addToWish } from './Slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 const Search = () => {
 
     const { searchText } = useParams();
     const [searchProduct, setSearchProduct] = useState([]);
+    const cart = useSelector((state) => state.cart.cart);
+    const wish = useSelector((state) => state.cart.wish);
+
 
     useEffect(() => {
         if (searchText) {
@@ -24,6 +27,14 @@ const Search = () => {
     const addWishHandler = (event, value) => {
         event.preventDefault();
         dispatch(addToWish(value));
+    }
+
+    const isInCart = (title) => {
+        return cart.some(item => item.title === title)
+    }
+
+    const isInWish = (title) => {
+        return wish.some(item => item.title === title)
     }
 
     return (
@@ -57,9 +68,9 @@ const Search = () => {
                                                     <div className='flex justify-between items-center px-2 my-3'>
                                                         <p>${val.price}</p>
                                                         <h6 className='rating bg-white text-success'>{val.rating} <i className="fa-solid fa-star"></i></h6>
-                                                        <i onClick={(e) => addWishHandler(e, val)} className="fa-solid fa-heart fa-xl text-muted wishIcon"></i>
+                                                        <button onClick={(e) => addWishHandler(e, val)} disabled={isInWish(val.title)}><i className={`fa-solid fa-heart fa-xl wishIcon ${isInWish(val.title) ? "text-red-500" : "text-muted"}`}></i></button>
                                                     </div>
-                                                    <button className='m-2 bg-purple-500 text-white rounded-md py-1' onClick={(e) => addCartHandler(e, val)}>Add To cart</button>
+                                                    <button className={`m-2 ${isInCart(val.title) ? "bg-purple-400" : "bg-purple-600"}  text-white rounded-md py-1`} disabled={isInCart(val.title)} onClick={(e) => addCartHandler(e, val)}>{isInCart(val.title) ? "Item Added To Cart" : "Add To Cart"}</button>
                                                 </NavLink>
                                             )
                                         })

@@ -41,9 +41,11 @@ const Topnav = () => {
             <header className='h-[68px] shadow-md'>
                 <div className='container'>
                     <div className='flex justify-between items-center py-3'>
-                        <div className='w-full md:w-auto flex gap-x-5 md:gap-x-2 justify-between items-center'>
-                            <i className="fa-solid fa-bars cursor-pointer pt-2" onClick={() => setShow(true)}></i>
-                            <NavLink to={"/"} className="text-2xl">ecommerce</NavLink>
+                        <div className='w-full md:w-auto flex justify-between items-center'>
+                            <div>
+                                <i className="fa-solid fa-bars cursor-pointer pt-2 text-purple-600" onClick={() => setShow(true)}></i>
+                                <NavLink to={"/"} className="text-2xl mx-2 text-purple-600">ecommerce</NavLink>
+                            </div>
                             <div className='flex items-center gap-x-3'>
                                 <button onClick={() => setShowSearchModel(true)} className='outline-none border-none block md:hidden'>
                                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -71,7 +73,7 @@ const Topnav = () => {
                                     <i className="fa-solid fa-heart"></i> <span className='mx-1'>WishList</span>
                                     <span style={{ display: wishTotalItems > 0 ? "flex" : "none" }} className='absolute w-[20px] h-[20px] flex justify-center items-center bg-red-500 top-0 right-0 rounded-full text-white'>{wishTotalItems}</span>
                                 </NavLink>
-                                <button className="bg-purple-500 text-white capitalize py-1 px-3 rounded-md" onClick={() => { setModalShow(true); setShow(false) }}>Log In</button>
+                                <button className="bg-purple-600 text-white capitalize py-1 px-3 rounded-md" onClick={() => { setModalShow(true); setShow(false) }}>Log In</button>
                             </div>
                         </div>
                     </div>
@@ -109,7 +111,7 @@ const Topnav = () => {
                                             <span>TrueCaller</span>
                                         </div>
                                     </div>
-                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(false)}>Back To <NavLink className="text-blue-500">Log In </NavLink>?</h6>
+                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(false)}>Back To <NavLink className="text-purple-600">Log In </NavLink>?</h6>
                                 </div>
                             </Modal.Body>
                         </>) : (
@@ -120,9 +122,9 @@ const Topnav = () => {
                                 <TextField id="outlined-basic" className='w-100 my-1' label="Email or Phone" variant="outlined" size='small' />
                                 <label>Password</label>
                                 <TextField id="outlined-basic" className='w-100 my-1 mb-2' label="Password" variant="outlined" size='small' />
-                                <Button className='w-100 bg-purple-500' onClick={() => setModalShow(false)}>Log In</Button>
+                                <Button className='w-100 bg-purple-600' onClick={() => setModalShow(false)}>Log In</Button>
                                 <div className='d-flex justify-content-end pt-3 '>
-                                    <NavLink className="text-blue-500">Forgot Password ?</NavLink>
+                                    <NavLink className="text-purple-600">Forgot Password ?</NavLink>
                                 </div>
                                 <div className='w-100 mt-4'>
                                     <h6 className='text-center mb-4'>Also Login With</h6>
@@ -140,7 +142,7 @@ const Topnav = () => {
                                             <span>TrueCaller</span>
                                         </div>
                                     </div>
-                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(true)}>Are You New User ? <NavLink className="text-blue-500"> Sign Up </NavLink>Here</h6>
+                                    <h6 className='pt-4 text-center' onClick={() => setSignIn(true)}>Are You New User ? <NavLink className="text-purple-600"> Sign Up </NavLink>Here</h6>
                                 </div>
                             </Modal.Body>
                         </>)

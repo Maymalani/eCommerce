@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import Products from './Products'
 import { useParams } from 'react-router-dom'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { CircularProgress } from '@mui/material';
 
 const Home = () => {
 
@@ -17,26 +18,36 @@ const Home = () => {
     setPagination(skipApi);
   }
 
+  const Loading = () => {
+    return (
+      <>
+        <div className='flex justify-center items-center my-5'>
+          <CircularProgress color='secondary' />
+        </div>
+      </>
+    )
+  }
+
   document.title = 'Home';
 
   return (
     <>
       <section className='my-3'>
         <div className='container'>
-          <div>
+          <Suspense fallback={<Loading />}>
             <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
               <Products title={title} pagination={pagination} />
             </div>
-            {
-              !title ?
-                <div className='w-full m-auto grid place-items-center mb-5'>
-                  <Stack spacing={0} className=''>
-                    <Pagination count={10} color='primary' size='large' page={page} onChange={paginationHandle} />
-                  </Stack>
-                </div>
-                : ""
-            }
-          </div>
+          </Suspense>
+          {
+            !title ?
+              <div className='w-full m-auto grid place-items-center mb-5'>
+                <Stack spacing={0}>
+                  <Pagination count={10} color='secondary' size='small' page={page} onChange={paginationHandle} />
+                </Stack>
+              </div>
+              : ""
+          }
         </div>
       </section>
     </>

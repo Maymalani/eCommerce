@@ -11,6 +11,14 @@ const Searchpage = ({ search }) => {
         axios.get(`https://dummyjson.com/products/search?q=${search}`).then(res => setSearchdata(res.data.products));
     }, [search]);
 
+    const isInCart = (title) => {
+        return cart.some(item => item.title === title)
+      }
+    
+      const isInWish = (title) => {
+        return wish.some(item => item.title === title)
+      }
+
 
     return (
         <>

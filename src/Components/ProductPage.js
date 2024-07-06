@@ -57,7 +57,7 @@ const ProductPage = () => {
       <div className='my-3'>
         <div className='container'>
           <p className='d-flex'>
-            <NavLink className="nav-link text-blue-500" to="/"> Home&nbsp;</NavLink> /<NavLink className="nav-link text-blue-500" to="/">&nbsp;Products&nbsp;</NavLink>/ {products?.title}
+            <NavLink className="nav-link text-purple-600" to="/"> Home&nbsp;</NavLink> /<NavLink className="nav-link text-purple-600" to="/">&nbsp;Products&nbsp;</NavLink>/ {products?.title}
           </p>
         </div>
       </div>
