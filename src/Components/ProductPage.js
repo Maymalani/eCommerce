@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, addToWish } from './Slice';
 import { Toaster } from 'react-hot-toast';
+import { Helmet } from 'react-helmet';
 
 const ProductPage = () => {
 
@@ -54,6 +55,22 @@ const ProductPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{products?.title}</title>
+        <meta name="description" content={products?.description} />
+        <link rel="canonical" href={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
+        <meta name="robots" content="index, follow" />
+        {/*open graph*/}
+        <meta property="og:title" content={`${products?.title}`} />
+        <meta property="og:description" content={`${products?.description}`} />
+        <meta property="og:image" content={`${products?.images}`} />
+        {/*open graph for twitter*/}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="E-Commerce Project" />
+        <meta name="twitter:description" content="E-Commerce Projects Made In ReactJs" />
+        <meta name="twitter:image" content={`${products?.images}`} />
+        <meta name="twitter:url" content={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
+      </Helmet>
       <div className='my-3'>
         <div className='container'>
           <p className='d-flex'>
@@ -65,7 +82,7 @@ const ProductPage = () => {
       <div>
         <div className='container'>
           <div className='flex justify-between items-center'>
-            <h6 className='text-lg font-semibold'>{products?.title}</h6>
+            <h1 className='text-lg font-semibold'>{products?.title}</h1>
             <div className='cursor-pointer bg-gray-200 py-1 px-2 rounded-md' title='Share' onClick={() => shareHandle(products)}>
               <i className="fa-solid fa-share"></i> Share
             </div>
@@ -92,7 +109,7 @@ const ProductPage = () => {
             </div>
             <div className='flex flex-col w-full mx-auto sm:w-[80%] md:w-[50%]'>
               <div className='w-full sm:w-[80%] mx-auto'>
-                <h1 className='text-lg sm:text-xl md:text-2xl font-medium'>{products?.title}</h1>
+                <h2 className='text-lg sm:text-xl md:text-2xl font-medium'>{products?.title}</h2>
                 <p className='my-3'>{products?.description}</p>
                 <div className='flex justify-between sm:justify-start items-center'>
                   <h3 className='text-lg font-semibold'>$ {products?.price}</h3>&nbsp;

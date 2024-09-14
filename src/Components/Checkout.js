@@ -94,8 +94,11 @@ const Checkout = () => {
     <>
       <div>
         <div className="container">
-          <div className="flex my-3">
-            <NavLink className="nav-link text-blue-500" to="/">Home</NavLink>&nbsp; / &nbsp;Checkout
+          <div className="flex justify-between items-center my-3">
+            <h1 className='text-2xl font-semibold'>Checkout</h1>
+            <p className='flex'>
+              <NavLink className="nav-link text-blue-500" to="/">Home</NavLink>&nbsp; / &nbsp;<span>Checkout</span>
+            </p>
           </div>
         </div>
       </div>
@@ -103,7 +106,7 @@ const Checkout = () => {
         <div className='container'>
           <div className='flex flex-wrap'>
             <div className='flex flex-col w-full md:w-1/2 bg-[#d9d3d2] p-3 mb-5 rounded-lg'>
-              <p className='w-full font-semibold text-lg'>Contact Details</p><br />
+              <h2 className='w-full font-semibold text-lg'>Contact Details</h2><br />
               <div className='flex flex-wrap'>
                 <TextField id="outlined-basic" className="w-full md:w-1/2 mb-3 md:mb-0" label="First Name" variant="outlined" size='small' />
                 <TextField id="outlined-basic" className='w-full md:w-1/2 mb-3 md:mb-0' label="Last Name" variant="outlined" size='small' />
@@ -173,7 +176,7 @@ const Checkout = () => {
       </div>*/}
       <Modal show={modalShow} size="sm" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Body className='bg-dark text-white'>
-          <h4 className='text-center flex justify-between text-white'>Payment <i onClick={() => setModalShow(false)} title='Close' className="d-flex text-danger justify-content-between fa-solid fa-xmark"></i></h4>
+          <h2 className='text-center flex justify-between text-white'>Payment <i onClick={() => setModalShow(false)} title='Close' className="d-flex text-danger justify-content-between fa-solid fa-xmark"></i></h2>
           <p className='text-secondary pt-3'>How Would You Like To Pay</p>
           {
             paymentMethod.map((val, ind) => {

@@ -42,9 +42,9 @@ const Topnav = () => {
                 <div className='container'>
                     <div className='flex justify-between items-center py-3'>
                         <div className='w-full md:w-auto flex justify-between items-center'>
-                            <div>
+                            <div className='flex items-center'>
                                 <i className="fa-solid fa-bars cursor-pointer pt-2 text-purple-600" onClick={() => setShow(true)}></i>
-                                <NavLink to={"/"} className="text-2xl mx-2 text-purple-600">ecommerce</NavLink>
+                                <h1><NavLink to={"/"} className="text-2xl mx-2 text-purple-600">ecommerce</NavLink></h1>
                             </div>
                             <div className='flex items-center gap-x-3'>
                                 <button onClick={() => setShowSearchModel(true)} className='outline-none border-none block md:hidden'>
