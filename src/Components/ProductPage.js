@@ -61,14 +61,14 @@ const ProductPage = () => {
         <link rel="canonical" href={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
         <meta name="robots" content="index, follow" />
         {/*open graph*/}
-        <meta property="og:title" content={`${products?.title}`} />
-        <meta property="og:description" content={`${products?.description}`} />
-        <meta property="og:image" content={`${products?.images}`} />
+        <meta property="og:title" content={products?.title} />
+        <meta property="og:description" content={products?.description} />
+        <meta property="og:image" content={products?.images} />
         {/*open graph for twitter*/}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="E-Commerce Project" />
-        <meta name="twitter:description" content="E-Commerce Projects Made In ReactJs" />
-        <meta name="twitter:image" content={`${products?.images}`} />
+        <meta name="twitter:description" content={products?.description} />
+        <meta name="twitter:image" content={products?.images} />
         <meta name="twitter:url" content={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
       </Helmet>
       <div className='my-3'>

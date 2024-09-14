@@ -48,7 +48,7 @@ const Home = () => {
         <meta name="twitter:title" content="E-Commerce Project" />
         <meta name="twitter:description" content="E-Commerce Projects Made In ReactJs" />
         <meta name="twitter:image" content="https://img.freepik.com/free-photo/showing-cart-trolley-shopping-online-sign-graphic_53876-133967.jpg" />
-        <meta name="twitter:url" content={`https://e-commerceshop-mu.vercel.app/product/`} />
+        <meta name="twitter:url" content={`https://e-commerceshop-mu.vercel.app/`} />
       </Helmet>
       <section className='my-3'>
         <div className='container'>
