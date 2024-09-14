@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, addToWish } from './Slice';
 import { Toaster } from 'react-hot-toast';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const ProductPage = () => {
 
@@ -55,22 +55,24 @@ const ProductPage = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>{products?.title}</title>
-        <meta name="description" content={products?.description} />
-        <link rel="canonical" href={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
-        <meta name="robots" content="index, follow" />
-        {/*open graph*/}
-        <meta property="og:title" content={products?.title} />
-        <meta property="og:description" content={products?.description} />
-        <meta property="og:image" content={products?.images} />
-        {/*open graph for twitter*/}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="E-Commerce Project" />
-        <meta name="twitter:description" content={products?.description} />
-        <meta name="twitter:image" content={products?.images} />
-        <meta name="twitter:url" content={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>{products?.title}</title>
+          <meta name="description" content={products?.description} />
+          <link rel="canonical" href={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
+          <meta name="robots" content="index, follow" />
+          {/*open graph*/}
+          <meta property="og:title" content={products?.title} />
+          <meta property="og:description" content={products?.description} />
+          <meta property="og:image" content={products?.images} />
+          {/*open graph for twitter*/}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="E-Commerce Project" />
+          <meta name="twitter:description" content={products?.description} />
+          <meta name="twitter:image" content={products?.images} />
+          <meta name="twitter:url" content={`https://e-commerceshop-mu.vercel.app/product/${id}`} />
+        </Helmet>
+      </HelmetProvider>
       <div className='my-3'>
         <div className='container'>
           <p className='d-flex'>
