@@ -54,7 +54,7 @@ const ProductPage = () => {
   }
 
   return (
-    <>
+    <div>
       <Helmet>
         <title>{products?.title}</title>
         <meta name="description" content={products?.description} />
@@ -190,7 +190,7 @@ const ProductPage = () => {
       
       <div className='my-5'><Toaster gutter={50} position='top-center' toastOptions={{ duration: 3000 }} /></div>*/}
 
-    </>
+    </div>
   )
 }
 
